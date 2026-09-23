@@ -397,49 +397,92 @@ fun task9() {
 }
 
 fun task10() {
-    open class Figure {
-        open fun calculateArea(): Double {
-            return 0.0
+    open class Vehicle {
+        open val title: String = "Транспортное средство"
+        open val speed: Int = 0
+
+        open fun start() {
+            print(title)
+            print(" начал движение со скоростью ")
+            print(speed)
+            println(" км/ч")
+        }
+
+        open fun stop() {
+            print(title)
+            println(" остановился.")
         }
     }
 
-    class Rectangle(
-        val firstSide: Double,
-        val secondSide: Double
-    ) : Figure() {
-        override fun calculateArea(): Double {
-            return firstSide * secondSide
+    class Boat : Vehicle() {
+        override val title: String = "Лодка"
+        override val speed: Int = 40
+
+        override fun start() {
+            print(title)
+            print(" отплыла от берега со скоростью ")
+            print(speed)
+            println(" км/ч")
+        }
+
+        override fun stop() {
+            print(title)
+            println(" пришвартовалась и остановилась.")
         }
     }
 
-    class Circle(
-        val circleRadius: Double
-    ) : Figure() {
-        override fun calculateArea(): Double {
-            val numberPi = 3.1415926535
-            return numberPi * circleRadius * circleRadius
+    class Plane : Vehicle() {
+        override val title: String = "Самолет"
+        override val speed: Int = 850
+
+        override fun start() {
+            print(title)
+            print(" взлетел и набрал скорость ")
+            print(speed)
+            println(" км/ч")
+        }
+
+        override fun stop() {
+            print(title)
+            println(" совершил посадку и остановился.")
         }
     }
 
-    println("Ввод данных для прямоугольника:")
-    print("Введите первую сторону: ")
-    val rectSideOne = readln().toDouble()
-    print("Введите вторую сторону: ")
-    val rectSideTwo = readln().toDouble()
+    class Tank : Vehicle() {
+        override val title: String = "Танк"
+        override val speed: Int = 60
 
-    println("\nВвод данных для круга:")
-    print("Введите радиус: ")
-    val enteredRadius = readln().toDouble()
+        override fun start() {
+            print(title)
+            print(" начал движение по пересеченной местности со скоростью ")
+            print(speed)
+            println(" км/ч")
+        }
 
-    val figuresArray: Array<Figure> = arrayOf(
-        Rectangle(rectSideOne, rectSideTwo),
-        Circle(enteredRadius)
-    )
-
-    println("\nРезультаты расчета площадей:")
-    for (currentFigure in figuresArray) {
-        val calculatedArea = currentFigure.calculateArea()
-        print("Площадь фигуры: ")
-        println(calculatedArea)
+        override fun stop() {
+            print(title)
+            println(" заглушил двигатель и остановился.")
+        }
     }
+
+    val vehicleDefault = Vehicle()
+    val boatVehicle = Boat()
+    val planeVehicle = Plane()
+    val tankVehicle = Tank()
+
+    println("--- Базовый класс ---")
+    vehicleDefault.start()
+    vehicleDefault.stop()
+
+    println("\n--- Лодка ---")
+    boatVehicle.start()
+    boatVehicle.stop()
+
+    println("\n--- Самолет ---")
+    planeVehicle.start()
+    planeVehicle.stop()
+
+    println("\n--- Танк ---")
+    tankVehicle.start()
+    tankVehicle.stop()
 }
