@@ -96,7 +96,6 @@ fun task4() {
     var current = 2
 
     while (count < n) {
-        // Проверяем, простое ли число current
         var isPrime = true
         for (i in 2 until current) {
             if (current % i == 0) {
@@ -114,7 +113,6 @@ fun task4() {
     }
 }
 
-// --- TASK 5 ---
 fun task5() {
     print("Введите размер массива: ")
     val size = readln().toInt()
@@ -236,7 +234,6 @@ fun task7() {
     val coefC = readln().toDouble()
 
     if (coefA == 0.0) {
-        // Случай линейного уравнения bx + c = 0
         if (coefB == 0.0) {
             if (coefC == 0.0) {
                 println("Бесконечно много решений.")
