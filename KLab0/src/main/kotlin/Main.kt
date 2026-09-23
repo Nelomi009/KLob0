@@ -4,7 +4,7 @@ import kotlin.math.sqrt
 fun main() {
     System.setOut(PrintStream(System.out, true, "UTF-8"))
 
-    print("Выберите номер задания (1, 2, 3, 4, 5, 6, 7): ")
+    print("Выберите номер задания (1..10): ")
     val choice = readln().toIntOrNull()
 
     when (choice) {
@@ -15,6 +15,9 @@ fun main() {
         5 -> task5()
         6 -> task6()
         7 -> task7()
+        8 -> task8()
+        9 -> task9()
+        10 -> task10()
         else -> println("Неверный номер задания.")
     }
 }
@@ -262,5 +265,184 @@ fun task7() {
         println("x = $rootX")
     } else {
         println("Действительных корней нет (D < 0).")
+    }
+}
+
+fun task8() {
+    class NumberArray(val numbers: Array<Int>) {
+
+        fun sumPositive(): Int {
+            var totalSum = 0
+            for (element in numbers) {
+                if (element > 0) totalSum += element
+            }
+            return totalSum
+        }
+
+        fun product(): Int {
+            var productResult = 1
+            for (element in numbers) {
+                productResult *= element
+            }
+            return productResult
+        }
+
+        fun average(): Double {
+            var totalSum = 0.0
+            for (element in numbers) {
+                totalSum += element
+            }
+            return totalSum / numbers.size
+        }
+    }
+
+    print("Введите размер массива: ")
+    val arraySize = readln().toInt()
+
+    if (arraySize <= 0) {
+        println("Размер массива должен быть больше нуля.")
+        return
+    }
+
+    val array = Array(arraySize) { 0 }
+
+    println("Введите элементы массива (по одному на строке):")
+    for (index in 0 until arraySize) {
+        array[index] = readln().toInt()
+    }
+
+    val arrayHandler = NumberArray(array)
+
+    val positiveSum = arrayHandler.sumPositive()
+    val totalProduct = arrayHandler.product()
+    val averageValue = arrayHandler.average()
+
+    println()
+    println("Результаты:")
+    print("Сумма положительных: ")
+    println(positiveSum)
+    print("Произведение: ")
+    println(totalProduct)
+    print("Среднее арифметическое: ")
+    println(averageValue)
+}
+
+fun task9() {
+    class Vector(
+        val coordX: Double,
+        val coordY: Double,
+        val coordZ: Double
+    ) {
+
+        fun length(): Double {
+            val sumOfSquares = coordX * coordX + coordY * coordY + coordZ * coordZ
+            return sqrt(sumOfSquares)
+        }
+
+        infix fun dotProduct(otherVector: Vector): Double {
+            return coordX * otherVector.coordX + coordY * otherVector.coordY + coordZ * otherVector.coordZ
+        }
+
+        operator fun times(otherVector: Vector): Vector {
+            val resultX = coordY * otherVector.coordZ - coordZ * otherVector.coordY
+            val resultY = coordZ * otherVector.coordX - coordX * otherVector.coordZ
+            val resultZ = coordX * otherVector.coordY - coordY * otherVector.coordX
+            return Vector(resultX, resultY, resultZ)
+        }
+    }
+
+    println("Ввод координат первого вектора:")
+    print("Введите X: ")
+    val firstX = readln().toDouble()
+    print("Введите Y: ")
+    val firstY = readln().toDouble()
+    print("Введите Z: ")
+    val firstZ = readln().toDouble()
+
+    println("Ввод координат второго вектора:")
+    print("Введите X: ")
+    val secondX = readln().toDouble()
+    print("Введите Y: ")
+    val secondY = readln().toDouble()
+    print("Введите Z: ")
+    val secondZ = readln().toDouble()
+
+
+    val vectorFirst = Vector(firstX, firstY, firstZ)
+    val vectorSecond = Vector(secondX, secondY, secondZ)
+
+    val firstLength = vectorFirst.length()
+    val secondLength = vectorSecond.length()
+
+    val scalarProduct = vectorFirst dotProduct vectorSecond
+
+    val vectorResult = vectorFirst * vectorSecond
+
+    println()
+    println("Результаты:")
+
+    print("Длина первого вектора: ")
+    println(firstLength)
+
+    print("Длина второго вектора: ")
+    println(secondLength)
+
+    print("Скалярное произведение (инфиксный вызов): ")
+    println(scalarProduct)
+
+    println("Векторное произведение (через оператор *):")
+    print("X: ")
+    println(vectorResult.coordX)
+    print("Y: ")
+    println(vectorResult.coordY)
+    print("Z: ")
+    println(vectorResult.coordZ)
+}
+
+fun task10() {
+    open class Figure {
+        open fun calculateArea(): Double {
+            return 0.0
+        }
+    }
+
+    class Rectangle(
+        val firstSide: Double,
+        val secondSide: Double
+    ) : Figure() {
+        override fun calculateArea(): Double {
+            return firstSide * secondSide
+        }
+    }
+
+    class Circle(
+        val circleRadius: Double
+    ) : Figure() {
+        override fun calculateArea(): Double {
+            val numberPi = 3.1415926535
+            return numberPi * circleRadius * circleRadius
+        }
+    }
+
+    println("Ввод данных для прямоугольника:")
+    print("Введите первую сторону: ")
+    val rectSideOne = readln().toDouble()
+    print("Введите вторую сторону: ")
+    val rectSideTwo = readln().toDouble()
+
+    println("\nВвод данных для круга:")
+    print("Введите радиус: ")
+    val enteredRadius = readln().toDouble()
+
+    val figuresArray: Array<Figure> = arrayOf(
+        Rectangle(rectSideOne, rectSideTwo),
+        Circle(enteredRadius)
+    )
+
+    println("\nРезультаты расчета площадей:")
+    for (currentFigure in figuresArray) {
+        val calculatedArea = currentFigure.calculateArea()
+        print("Площадь фигуры: ")
+        println(calculatedArea)
     }
 }
